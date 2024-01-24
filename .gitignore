@@ -1,3 +1,6 @@
 .venv
 Scratchpad.ipynb
 __pycache__
+
+image_encoder_cache/
+.vscode/
