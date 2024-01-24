@@ -1141,7 +1141,7 @@ class TextModel(nn.Module):
 
         return self.tokenizer.batch_decode(output_ids, skip_special_tokens=True)
 
-    def answer_question(self, image_embeds, question, **kwargs):
+    def answer_question(self, image_embeds, question, max_new_tokens, **kwargs):
         import time
         prompt = f"<image>\n\nQuestion: {question}\n\nAnswer:"
 
@@ -1150,13 +1150,13 @@ class TextModel(nn.Module):
             image_embeds,
             prompt,
             eos_text="<END>",
-            max_new_tokens=128,
+            max_new_tokens=max_new_tokens,
             **kwargs,
         )[0]
         end_time = time.time()  # End the timer
 
         duration = end_time - start_time  # Calculate the duration
-        print(f"Generate method took {duration} seconds.")  # Print the duration
+        print(f"Inference time took {duration} seconds.")  # Print the duration
 
         return re.sub("<$", "", re.sub("END$", "", answer)).strip(), duration
 
